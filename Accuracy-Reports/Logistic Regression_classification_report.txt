@@ -1,0 +1,21 @@
+Validation Accuracy: 0.8743224252158202
+Test Accuracy: 0.873220694382838
+Validation Report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.86      0.87      2481
+           1       0.86      0.89      0.88      2500
+
+    accuracy                           0.87      4981
+   macro avg       0.87      0.87      0.87      4981
+weighted avg       0.87      0.87      0.87      4981
+
+Test Report:
+              precision    recall  f1-score   support
+
+           0       0.88      0.87      0.87     12360
+           1       0.87      0.88      0.87     12439
+
+    accuracy                           0.87     24799
+   macro avg       0.87      0.87      0.87     24799
+weighted avg       0.87      0.87      0.87     24799

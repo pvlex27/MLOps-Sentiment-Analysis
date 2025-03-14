@@ -1,0 +1,15 @@
+# Virtual environment
+
+ml/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Logs and output files
+logs/
+*.log
+mlruns/
+mlflow_data/
+
+

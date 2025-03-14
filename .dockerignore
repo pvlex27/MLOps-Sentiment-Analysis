@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+venv/
+ml/  # Exclude your virtual environment
+.DS_Store
+# Ignore IMDB dataset folder (if it's large and not needed in Docker)
+aclImdb/
