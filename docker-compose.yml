@@ -1,0 +1,82 @@
+version: "3.8"
+
+services:
+  fastapi-app:
+    build: .
+    container_name: fastapi_app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mlflow
+      - prometheus
+    environment:
+      API_USERNAME: admin
+      API_PASSWORD: password123
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+    volumes:
+      - ./logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      interval: 30s
+      retries: 3
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.5.0
+    container_name: mlflow_server
+    command: >
+      sh -c "pip install prometheus-flask-exporter &&
+             mlflow server --backend-store-uri sqlite:///mlflow.db --host 0.0.0.0 --port 5000"
+    ports:
+      - "5000:5000"
+    environment:
+      MLFLOW_BACKEND_STORE_URI: sqlite:///mlflow.db
+      MLFLOW_ARTIFACT_ROOT: /mlflow/artifacts
+    volumes:
+      - ./mlflow_data:/mlflow
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus_server
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--web.listen-address=:9090"
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana_server
+    ports:
+      - "3001:3000"
+    depends_on:
+      - prometheus
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - grafana-data:/var/lib/grafana
+
+volumes:
+  grafana-data:
+  mlflow_data:
+global:
+  scrape_interval: 15s  # Set the default scrape interval
+
+scrape_configs:
+  - job_name: "fastapi"
+    static_configs:
+      - targets: ["fastapi-app:8080"]
+
+  - job_name: "mlflow"
+    static_configs:
+      - targets: ["mlflow_server:5000"]
+
+  - job_name: "mlflow_metrics"
+    static_configs:
+      - targets: ["mlflow_server:5001"]  # Expose custom MLflow metrics
+
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["prometheus:9090"]

@@ -1,0 +1,49 @@
+#index.html                                                                                                                                                  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center h-screen">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        <h1 class="text-3xl font-bold text-center text-gray-800">Sentiment Analysis</h1>
+
+        {% if prediction %}
+        <!-- Show the question and result once it's submitted -->
+        <div class="mt-4 p-4 bg-gray-100 rounded-md shadow-md">
+            <h2 class="text-lg font-semibold text-gray-700">Your Input:</h2>
+            <p class="text-gray-600 italic">"{{ text }}"</p>
+
+            <h2 class="mt-3 text-lg font-semibold text-gray-700">Prediction Results:</h2>
+            <ul class="mt-2 space-y-1">
+                <li class="text-gray-700"><strong>Logistic Regression:</strong> {{ prediction["Logistic Regression"] }}</li>
+                <li class="text-gray-700"><strong>Naive Bayes:</strong> {{ prediction["Naive Bayes"] }}</li>
+                <li class="text-gray-700"><strong>LSTM:</strong> {{ prediction["LSTM"] }}</li>
+            </ul>
+        </div>
+
+        <!-- Next Question Button -->
+        <form action="/" method="get" class="mt-4">
+            <button type="submit" class="w-full bg-purple-500 text-white p-2 rounded-md hover:bg-purple-600 transition">
+                Ask Next Question
+            </button>
+        </form>
+
+        {% else %}
+        <!-- Show input box only when no question is asked -->
+        <p class="text-center text-gray-500 mb-4">Enter a sentence to predict its sentiment.</p>
+        <form action="/" method="post" class="mt-4">
+            <textarea name="text" required class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-400"
+                      placeholder="Type your text here..."></textarea>
+            <button type="submit" class="w-full mt-3 bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition">
+                Predict Sentiment
+            </button>
+        </form>
+        {% endif %}
+        <a href="/logout" class="block text-center text-blue-500 mt-2">Logout</a>
+    </div>
+</body>
+</html>
+ 
