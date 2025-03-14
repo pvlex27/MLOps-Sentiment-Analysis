@@ -26,7 +26,7 @@ This project automates ML workflow, model deployment, and performance monitoring
 🛠 Tech Stack
 
 
-Programming: Python
+Programming: Python3. 9
 
 Libraries: Scikit-learn, TensorFlow/PyTorch, FastAPI, Pandas, NumPy
 
@@ -34,8 +34,12 @@ Model Deployment: FastAPI, Docker
 
 Monitoring: MLflow, Prometheus, Grafana
 
-Virtual Environment: venv
+Virtual Environment: ml
 
+Download :
+
+1. Download imdb dataset and add    aclImdb folder to the project
+2. To run Prometheus and grafana download Prometheus and grafana
 
 📁 Project Structure
 
