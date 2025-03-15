@@ -83,7 +83,7 @@ ML_Model-Sentiment_Analysis/
 
 1️⃣ Clone the Repository
 
-git clone
+git clone https://github.com/pvlex27/MLOps-Sentiment-Analysis.git
 
 cd ML_Model-Sentiment_Analysis
 
@@ -103,7 +103,9 @@ To run Prometheus and grafana for monitoring dashboards download Prometheus and 
 
 4️⃣ Train the Model
 
-python train.py
+Add imdb dataset into the project to train that.
+
+Rub python train.py
 
 🔹 Training Includes:
 
