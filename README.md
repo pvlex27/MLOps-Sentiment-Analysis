@@ -1,6 +1,10 @@
-Sentiment Analysis API with MLOps Integration
+**Sentiment Analysis API with MLOps Integration**
 
 This project automates ML workflow, model deployment, and performance monitoring using MLOps best practices. It trains and deploys a Sentiment Analysis model as a REST API using FastAPI and integrates MLflow, Prometheus, and Grafana for tracking and monitoring.
+
+1. Model Training and Evaluation (train.py): Uses traditional models (Logistic Regression, Naive Bayes) and deep learning models (LSTM) to classify movie reviews into positive or negative sentiments.
+
+2. Web Application (main.py): A FastAPI-based web app that allows users to input text and get sentiment predictions.
 
 📌 Features
 
@@ -25,7 +29,6 @@ This project automates ML workflow, model deployment, and performance monitoring
 
 🛠 Tech Stack
 
-
 Programming: Python3. 9
 
 Libraries: Scikit-learn, TensorFlow/PyTorch, FastAPI, Pandas, NumPy
@@ -36,10 +39,11 @@ Monitoring: MLflow, Prometheus, Grafana
 
 Virtual Environment: ml
 
-Download :
+Downloads :
 
-1. Download imdb dataset and add    aclImdb folder to the project
-2. To run Prometheus and grafana download Prometheus and grafana
+1. Download IMDB dataset for training models.
+   
+2. Prometheus and Grafana to set up monitoring dashboards.
 
 📁 Project Structure
 
@@ -95,6 +99,8 @@ pip install -r requirements.txt
 
 Extract the IMDB dataset inside the aclImdb/ directory with train/ and test/ folders.
 
+To run Prometheus and grafana for monitoring dashboards download Prometheus and grafana and add grafana-v11.5.2 , prometheus-3.2.1.windows-amd64 to the project folder.
+
 4️⃣ Train the Model
 
 python train.py
@@ -113,9 +119,13 @@ python train.py
 
 ✔ Model Training Graphs: Stored in Graph-Figure/
 
-5️⃣ Start FastAPI Server
+✔ Result: Logistic Regression performed the best.
 
-uvicorn main:app --host 0.0.0.0 --port 8080
+5️⃣ Run and Start FastAPI Server
+
+Run main.py tp predict the analysis
+
+uvicorn main:app --host 0.0.0.0 --port 8080 and check using http://127.0.0.1:8080/ or http://localhost:8080/
 
 🔹 FastAPI Features
 
@@ -131,9 +141,15 @@ Swagger UI: http://localhost:8080/docs
 
 ReDoc: http://localhost:8080/redoc
 
-7️⃣ Test API Endpoints Using cURL
+7️⃣ Test API Endpoints Using cURL(command promt-windows)
 
-curl -X POST "http://127.0.0.1:8080/" -H "Content-Type: application/x-www-form-urlencoded" -u admin:password123 -d "text=I love this movie!"
+Main app - curl -X POST "http://127.0.0.1:8080/" -H "Content-Type: application/x-www-form-urlencoded" -u admin:password123 -d "text=I love this movie!"
+
+mlflow - curl -i http://localhost:8080
+
+grafana - curl -i http://localhost:3001
+
+prometheus - curl -i http://localhost:9090
 
 📦 Deployment with Docker
 
@@ -152,6 +168,10 @@ MLflow http://localhost:5000
 Grafana http://localhost:3001
 
 Prometheus http://localhost:9090
+
+Conclusion
+
+This project successfully automates an end-to-end Sentiment Analysis workflow — from data preprocessing, model training, and deployment to monitoring using modern MLOps tools like FastAPI, Docker, MLflow, Prometheus, and Grafana. The Logistic Regression model showed the best performance, and the API is fully functional with user authentication and real-time monitoring.
 
 📝 Future Enhancements
 
