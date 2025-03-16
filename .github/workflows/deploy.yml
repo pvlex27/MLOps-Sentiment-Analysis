@@ -28,6 +28,12 @@ jobs:
         chmod 600 ~/.ssh/mlops.pem
         ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
         ssh -i ~/.ssh/mlops.pem ec2-user@${{ secrets.SERVER_IP }} << 'EOF'
+          sudo yum update -y
+          sudo yum install -y docker
+          sudo systemctl start docker
+          sudo usermod -aG docker ec2-user
+          docker --version  # Verify Docker installation
+          
           docker pull ${{ secrets.DOCKER_USERNAME }}/fastapi-ml-app:latest
           docker stop fastapi-container || true
           docker rm fastapi-container || true
