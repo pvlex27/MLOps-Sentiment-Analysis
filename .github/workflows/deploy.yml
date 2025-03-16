@@ -37,5 +37,5 @@ jobs:
           docker pull pv271994/mlmodel-sentimentanalysis-fastapi-app:latest
           docker stop fastapi-container || true
           docker rm fastapi-container || true
-          docker run -d -p 80:8000 --name fastapi-container pv271994/mlmodel-sentimentanalysis-fastapi-app:latest
-        EOF
+          docker run -d -p 80:8080 --name fastapi-container pv271994/mlmodel-sentimentanalysis-fastapi-app:latest
+
