@@ -34,8 +34,8 @@ jobs:
           sudo usermod -aG docker ec2-user
           docker --version  # Verify Docker installation
           
-          docker pull ${{ secrets.DOCKER_USERNAME }}/fastapi-ml-app:latest
+          docker pull pv271994/mlmodel-sentimentanalysis-fastapi-app:latest
           docker stop fastapi-container || true
           docker rm fastapi-container || true
-          docker run -d -p 80:8000 --name fastapi-container ${{ secrets.DOCKER_USERNAME }}/fastapi-ml-app:latest
+          docker run -d -p 80:8000 --name fastapi-container pv271994/mlmodel-sentimentanalysis-fastapi-app:latest
         EOF
