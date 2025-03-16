@@ -1,0 +1,35 @@
+name: Deploy FastAPI ML App
+
+on:
+  push:
+    branches:
+      - main  # Triggers deployment on push to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+    - name: Build and Push Docker Image
+      run: |
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/fastapi-ml-app:latest .
+        docker push ${{ secrets.DOCKER_USERNAME }}/fastapi-ml-app:latest
+
+    - name: Deploy to EC2
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/mlops.pem
+        chmod 600 ~/.ssh/mlops.pem
+        ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+        ssh -i ~/.ssh/mlops.pem ec2-user@${{ secrets.SERVER_IP }} << 'EOF'
+          docker pull ${{ secrets.DOCKER_USERNAME }}/fastapi-ml-app:latest
+          docker stop fastapi-container || true
+          docker rm fastapi-container || true
+          docker run -d -p 80:8000 --name fastapi-container ${{ secrets.DOCKER_USERNAME }}/fastapi-ml-app:latest
+        EOF
