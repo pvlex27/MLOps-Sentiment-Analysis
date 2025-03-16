@@ -18,8 +18,8 @@ jobs:
 
     - name: Build and Push Docker Image
       run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/fastapi-ml-app:latest .
-        docker push ${{ secrets.DOCKER_USERNAME }}/fastapi-ml-app:latest
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/mlmodel-sentimentanalysis-fastapi-app:latest .
+        docker push ${{ secrets.DOCKER_USERNAME }}/mlmodel-sentimentanalysis-fastapi-app:latest
 
     - name: Deploy to EC2
       run: |
@@ -45,11 +45,11 @@ jobs:
           # Ensure user has Docker access
           newgrp docker
 
-          # Deploy FastAPI App
-          docker pull ${{ secrets.DOCKER_USERNAME }}/fastapi-ml-app:latest
+          # Deploy FastAPI App (Updated Image Name)
+          docker pull ${{ secrets.DOCKER_USERNAME }}/mlmodel-sentimentanalysis-fastapi-app:latest
           docker stop fastapi-container || true
           docker rm fastapi-container || true
-          docker run -d -p 80:8080 --restart=always --name fastapi-container ${{ secrets.DOCKER_USERNAME }}/fastapi-ml-app:latest
+          docker run -d -p 80:8080 --restart=always --name fastapi-container ${{ secrets.DOCKER_USERNAME }}/mlmodel-sentimentanalysis-fastapi-app:latest
 
           # Deploy Grafana
           docker stop grafana_server || true
