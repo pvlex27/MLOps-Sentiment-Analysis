@@ -1,5 +1,3 @@
-#main.py file  
-from fastapi import FastAPI
 from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
@@ -148,7 +146,6 @@ def predict(request: Request, text: str = Form(...)):
         "Naive Bayes": predict_tfidf(processed_text, nb_model),
         "LSTM": predict_lstm(processed_text)
     }
-
 
     for model, pred in predictions.items():
         log_prediction(model, processed_text, pred)
