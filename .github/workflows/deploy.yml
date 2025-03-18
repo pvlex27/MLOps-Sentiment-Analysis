@@ -3,7 +3,7 @@ name: Deploy FastAPI ML App
 on:
   push:
     branches:
-      - main  # Triggers deployment on push to the main branch
+      - main  # Trigger on push to the main branch
 
 jobs:
   deploy:
@@ -27,7 +27,11 @@ jobs:
         echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/mlops.pem
         chmod 600 ~/.ssh/mlops.pem
         ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
-        
+
+        # Copy Prometheus config to EC2
+        echo "Copying prometheus.yml to EC2..."
+        scp -i ~/.ssh/mlops.pem prometheus.yml ec2-user@${{ secrets.SERVER_IP }}:/home/ec2-user/prometheus.yml
+
         # Connect to EC2 and perform deployment
         ssh -i ~/.ssh/mlops.pem ec2-user@${{ secrets.SERVER_IP }} << 'EOF'
           echo "Updating EC2 instance..."
@@ -72,6 +76,14 @@ jobs:
           docker stop prometheus_server || true
           docker rm prometheus_server || true
           docker run -d -p 9090:9090 --restart=always --name prometheus_server prom/prometheus
+
+          # Copy Prometheus config to container
+          echo "Copying prometheus.yml to Prometheus container..."
+          docker cp /home/ec2-user/prometheus.yml prometheus_server:/etc/prometheus/prometheus.yml
+          
+          # Restart Prometheus with updated config
+          echo "Restarting Prometheus with new config..."
+          docker restart prometheus_server
 
           echo "Deployment completed successfully!"
         EOF
