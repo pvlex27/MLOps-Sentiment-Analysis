@@ -153,6 +153,17 @@ grafana - curl -i http://localhost:3001
 
 prometheus - curl -i http://localhost:9090
 
+🛡️ Monitoring
+
+Ensure Prometheus and Grafana are up and running using Docker Compose.
+
+Prometheus: http://localhost:9090
+
+Grafana: http://localhost:3001
+
+MLflow: http://localhost:5000
+
+
 📦 Deployment with Docker
 
 1️⃣ Build & Run Docker Containers
@@ -170,6 +181,38 @@ MLflow http://localhost:5000
 Grafana http://localhost:3001
 
 Prometheus http://localhost:9090
+
+📦 Docker Images
+
+All images are publicly available on Docker Hub. You can pull and run them using the following commands:
+
+1. Sentiment Analysis API
+   
+docker pull pv271994/mlmodel-sentimentanalysis-fastapi-app
+
+docker run -p 8080:8080 pv271994/mlmodel-sentimentanalysis-fastapi-app
+
+2. MLflow
+
+docker pull pv271994/mlflow
+
+docker run -p 5000:5000 pv271994/mlflow
+
+3. Prometheus
+
+docker pull pv271994/prometheus
+
+docker run -p 9090:9090 pv271994/prometheus
+
+4. Grafana
+
+docker pull pv271994/grafana
+
+docker run -p 3001:3000 pv271994/grafana
+
+Alternatively, use Docker Compose to run all services with one command:
+
+docker-compose up --build -d
 
 Conclusion
 
