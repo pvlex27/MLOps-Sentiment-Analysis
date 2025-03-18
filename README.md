@@ -214,15 +214,33 @@ Alternatively, use Docker Compose to run all services with one command:
 
 docker-compose up --build -d
 
+AWS Deployment 
+
+The FastAPI ML application, Prometheus, Grafana, and MLflow are successfully deployed on AWS using EC2.
+
+The deployment was automated using GitHub Actions.
+
+All services are up and running.
+
+Service Access Points
+
+Service	Port	URL	Status
+
+FastAPI App	80	http://3.109.43.71	✅ Up
+
+Grafana	3001	http://3.109.43.71:3001	✅ Up
+
+Prometheus	9090	http://3.109.43.71:9090	✅ Up
+
+MLflow	5000	http://3.109.43.71:5000	✅ Up
+
+
+
 Conclusion
 
 This project successfully automates an end-to-end Sentiment Analysis workflow — from data preprocessing, model training, and deployment to monitoring using modern MLOps tools like FastAPI, Docker, MLflow, Prometheus, and Grafana. The Logistic Regression model showed the best performance, and the API is fully functional with user authentication and real-time monitoring.
 
 📝 Future Enhancements
-
-✔ CI/CD Pipeline Integration
-
-✔ Cloud Deployment (AWS/GCP/Azure)
 
 ✔ Auto-scaling with Kubernetes
 
