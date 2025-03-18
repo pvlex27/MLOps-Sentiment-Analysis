@@ -87,7 +87,9 @@ def predict_lstm(text):
 
 # ✅ MLflow Logging Function
 def log_prediction(model_name, text, prediction):
-    mlflow.set_tracking_uri("http://mlflow:5000")  # Use MLflow container name
+    # mlflow.set_tracking_uri("http://mlflow:5000")  # Use MLflow container name
+    mlflow.set_tracking_uri("http://mlflow_server:5000")  # Use Docker container name
+
     mlflow.set_experiment("Sentiment_Analysis")
 
     with mlflow.start_run():
